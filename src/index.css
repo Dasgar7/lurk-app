@@ -1,0 +1,196 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Custom CSS for animations and glassmorphism */
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(100, 255, 255, 0.4), 0 0 10px rgba(100, 255, 255, 0.2), 0 0 15px rgba(100, 255, 255, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(100, 255, 255, 0.8), 0 0 30px rgba(100, 255, 255, 0.5), 0 0 45px rgba(100, 255, 255, 0.3);
+  }
+}
+
+@keyframes fadeInMoveUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulsate {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+}
+
+/* Utility classes for animations */
+.animate-gradient-shift {
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+
+.animate-glow {
+  animation: glow 1.5s ease-in-out infinite;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.08); /* Darker glass effect */
+  backdrop-filter: blur(15px) saturate(180%);
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  transition: all 0.3s ease-in-out;
+}
+
+.glass-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.5);
+  border-color: rgba(100, 255, 255, 0.4);
+}
+
+.button-glow {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.button-glow::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(100, 255, 255, 0.6) 0%, transparent 70%);
+  transform: scale(0);
+  opacity: 0;
+  transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
+  z-index: -1;
+}
+
+.button-glow:hover::before {
+  transform: scale(1);
+  opacity: 1;
+  animation: pulsate 1.5s infinite;
+}
+
+/* Specific component styles */
+.hero-parallax {
+  will-change: transform;
+}
+
+.nav-link-hover {
+  position: relative;
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+
+.nav-link-hover::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 0;
+  height: 2px;
+  background-color: #64ffff; /* Cyan glow */
+  transition: width 0.3s ease;
+}
+
+.nav-link-hover:hover::after {
+  width: 100%;
+}
+
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Image zoom on hover for gallery */
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+}
+
+.gallery-item img {
+  transition: transform 0.4s ease-in-out;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.1);
+}
+
+.gallery-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 50%);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.gallery-item:hover::before {
+  opacity: 1;
+}
+
+.gallery-info {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  z-index: 2;
+}
+
+.gallery-item:hover .gallery-info {
+  opacity: 1;
+  transform: translateY(0);
+}
